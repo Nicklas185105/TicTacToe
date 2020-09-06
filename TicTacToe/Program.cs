@@ -12,15 +12,16 @@ namespace TicTacToe
             //Create players
             Console.WriteLine("Enter player 1 name: ");
             playerName = Console.ReadLine();
-            TicTacToe player1 = new TicTacToe(1, playerName);
+            ConsolePlay player1 = new ConsolePlay(1, playerName);
 
             Console.WriteLine("Enter player 2 name: (Type 'computer' if you want to play against computer)");
             playerName = Console.ReadLine();
-            TicTacToe player2 = new TicTacToe(2, playerName);
+            ConsolePlay player2 = new ConsolePlay(2, playerName);
 
             while (!gameOver)
             {
-                TicTacToe.intBoard();
+                TicTacToe.initializeBoard();
+                player1.displayBoard(player1.player.getBoard());
 
                 while (!player1.PlayGame() && !player2.PlayGame())
                     gameOver = true;
