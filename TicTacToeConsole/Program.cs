@@ -8,6 +8,8 @@ namespace TicTacToeConsole
         static int width;
         static bool vsComputer;
 
+        static Computer computer;
+
         static void Main(string[] args)
         {
             GameLoop();
@@ -17,16 +19,11 @@ namespace TicTacToeConsole
         {
             Player player1;
             Player player2;
-            Computer computer;
 
             string answer = "";
             bool answerBool = false;
             bool gameLoop = true;
             bool gameDone = false;
-            int turn = 0;
-            int r = 0;
-            int c = 0;
-
             #region Start
             Console.WriteLine("Welcome to Tic Tac Toe Console Edition!");
             Console.WriteLine();
@@ -56,25 +53,26 @@ namespace TicTacToeConsole
             {
                 Console.WriteLine();
                 Console.WriteLine("The computer is now generated and ready for to play");
+                height = 3;
             }
             else
             {
                 Console.WriteLine();
                 Console.WriteLine("What is the name of the second player?");
                 player2.UpdatePlayerName(Console.ReadLine());
-            }
 
-            Console.WriteLine();
-            Console.WriteLine("You can player with the traditional board size (3x3) or a bigger one");
-            Console.WriteLine("Please enter height and width for the board");
-            answerBool = false;
-            while (!answerBool)
-            {
-                int.TryParse(Console.ReadLine().Trim(), out height);
-                if (height < 3)
-                    Console.WriteLine("Please write a bigger number!");
-                else
-                    answerBool = true;
+                Console.WriteLine();
+                Console.WriteLine("You can player with the traditional board size (3x3) or a bigger one");
+                Console.WriteLine("Please enter height and width for the board");
+                answerBool = false;
+                while (!answerBool)
+                {
+                    int.TryParse(Console.ReadLine().Trim(), out height);
+                    if (height < 3)
+                        Console.WriteLine("Please write a bigger number!");
+                    else
+                        answerBool = true;
+                }
             }
             width = height;
             #endregion
@@ -83,20 +81,21 @@ namespace TicTacToeConsole
             {
                 Logic logic = new Logic(width, height);
                 ConsoleUI consoleUI = new ConsoleUI(width, height);
+                computer = new Computer(2);
                 consoleUI.ClearConsole();
                 consoleUI.DisplayBoard(logic.GetBoard());
-                turn = 0;
+                int turn = 0;
 
                 while (!gameDone)
                 {
                     Console.WriteLine();
                     if (turn % 2 == 0) // Player1
                     {
-                        PlayerTurn(player1, logic, r, c);
+                        PlayerTurn(player1, logic, false);
                     }
                     else // Player2
                     {
-                        PlayerTurn(vsComputer ? computer.GetPlayer() : player2, logic, r, c);
+                        PlayerTurn(vsComputer ? computer.GetPlayer() : player2, logic, vsComputer);
                     }
 
                     consoleUI.ClearConsole();
@@ -153,17 +152,30 @@ namespace TicTacToeConsole
             }
         }
 
-        static void PlayerTurn(Player player, Logic logic, int r, int c)
+        static void PlayerTurn(Player player, Logic logic, bool vsComputer)
         {
-            Console.WriteLine(player.GetPlayerName() + " please enter board coordinates!");
-            int.TryParse(Console.ReadLine().Trim(), out r);
-            int.TryParse(Console.ReadLine().Trim(), out c);
-            while (!logic.CheckBoard(r, c))
+            int r = 0;
+            int c = 0;
+            if (!vsComputer)
             {
+                Console.WriteLine(player.GetPlayerName() + " please enter board coordinates!");
                 int.TryParse(Console.ReadLine().Trim(), out r);
                 int.TryParse(Console.ReadLine().Trim(), out c);
+                while (!logic.CheckBoard(r, c))
+                {
+                    Console.WriteLine("That place is already occupied! Please pick another place");
+                    int.TryParse(Console.ReadLine().Trim(), out r);
+                    int.TryParse(Console.ReadLine().Trim(), out c);
+                }
+                logic.UpdateBoard(r, c, player.GetPlayerNumber());
             }
-            logic.UpdateBoard(r, c, player.GetPlayerNumber());
+            else
+            {
+                // Run computer logic
+                computer.NextMove(logic, out r, out c);
+
+                logic.UpdateBoard(r, c, player.GetPlayerNumber());
+            }
         }
     }
 }
