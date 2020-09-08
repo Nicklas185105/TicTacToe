@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TicTacToeConsole
+namespace TicTacToeLogic
 {
-    class Player
+    public class Player
     {
         string _playerName;
         int _playerNumber;

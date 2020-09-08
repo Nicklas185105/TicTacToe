@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TicTacToeConsole
+namespace TicTacToeLogic
 {
-    class Logic
+    public class Logic
     {
         int[,] _board;
         int width;

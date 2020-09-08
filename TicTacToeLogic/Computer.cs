@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TicTacToeConsole
+namespace TicTacToeLogic
 {
-    class Computer
+    public class Computer
     {
         Player player;
         int moveCounter;
@@ -61,7 +61,7 @@ namespace TicTacToeConsole
                             break;
                         }
                         else
-                        {
+                        {//TODO: fix winning sequence
                             r = 1;
                             c = 0;
                             break;
