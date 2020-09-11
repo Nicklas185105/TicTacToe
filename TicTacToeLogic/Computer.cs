@@ -8,13 +8,11 @@ namespace TicTacToeLogic
     {
         Player player;
         int moveCounter;
-        bool tryWin;
 
         public Computer(int playerNumber)
         {
             player = new Player("Computer", playerNumber);
             moveCounter = 0;
-            tryWin = false;
         }
 
         public Player GetPlayer()
@@ -34,80 +32,70 @@ namespace TicTacToeLogic
                 case 1:
                     if (board[0,0] == 1 || board[0,2] == 1 || board[2,0] == 1 || board[2,2] == 1)
                     {
-                        tryWin = false;
                         r = 1;
                         c = 1;
                         break;
                     }
                     else if (board[1,1] == 1)
                     {
-                        tryWin = false;
                         r = 2;
                         c = 2;
                         break;
                     }
                     else
                     {
-                        tryWin = true;
                         r = 1;
                         c = 1;
                         break;
                     }
                 case 2:
-                    if (!tryWin)
+                    if (playerAbleToWin(board, 2, 1, out int r1, out int c1))
                     {
-                        if (playerAbleToWin(board, out r, out c))
-                        {
-                            break;
-                        }
-                        else
-                        {//TODO: fix winning sequence
-                            r = 1;
-                            c = 0;
-                            break;
-                        }
+                        r = r1;
+                        c = c1;
+                        break;
                     }
                     else
                     {
-                        r = 2;
-                        c = 0;
+                        playerAbleToWin(board, 1, 2, out r, out c);
                         break;
                     }
                 case 3:
-                    if (!tryWin)
+                    if(playerAbleToWin(board, 2, 1, out r1, out c1))
                     {
-                        playerAbleToWin(board, out r, out c);
+                        r = r1;
+                        c = c1;
                         break;
                     }
                     else
                     {
-                        r = 2;
-                        c = 2;
+                        playerAbleToWin(board, 1, 2, out r, out c);
                         break;
                     }
                 case 4:
-                    if (!tryWin)
+                    if (playerAbleToWin(board, 2, 1, out r1, out c1))
                     {
-                        playerAbleToWin(board, out r, out c);
+                        r = r1;
+                        c = c1;
                         break;
                     }
                     else
                     {
-                        if (board[0,0] == 1)
-                        {
-                            r = 2;
-                            c = 1;
-                        }
-                        else
-                        {
-                            r = 0;
-                            c = 0;
-                        }
+                        playerAbleToWin(board, 1, 2, out r, out c);
                         break;
                     }
                 case 5:
-                    playerAbleToWin(board, out r, out c);
-                    break;
+                    if (playerAbleToWin(board, 2, 1, out r1, out c1))
+                    {
+                        r = r1;
+                        c = c1;
+                        break;
+                    }
+                    else
+                    {
+                        playerAbleToWin(board, 1, 2, out r, out c);
+                        break;
+                    }
                 default:
                     r = 0;
                     c = 0;
@@ -118,264 +106,204 @@ namespace TicTacToeLogic
             c++;
         }
 
-        public bool playerAbleToWin(int[,] board, out int r, out int c)
+        public bool playerAbleToWin(int[,] board, int one, int two, out int r, out int c)
         {
-            int _1 = 0;
-            int _2 = 0;
-            int _3 = 0;
-            int _4 = 0;
-            int _5 = 0;
-            int _6 = 0;
-            int _7 = 0;
-            int _8 = 0;
-            int _9 = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                switch (i)
-                {
-                    case 1:
-                        if (board[0, 0] == 1)
-                            _1 = 1;
-                        else if (board[0, 0] == 2)
-                            _1 = 2;
-                        break;
-                    case 2:
-                        if (board[0, 1] == 1)
-                            _2 = 1;
-                        else if (board[0, 1] == 2)
-                            _2 = 2;
-                        break;
-                    case 3:
-                        if (board[0, 2] == 1)
-                            _3 = 1;
-                        else if (board[0, 2] == 2)
-                            _3 = 2;
-                        break;
-                    case 4:
-                        if (board[1, 0] == 1)
-                            _4 = 1;
-                        else if (board[1, 0] == 2)
-                            _4 = 2;
-                        break;
-                    case 5:
-                        if (board[1, 1] == 1)
-                            _5 = 1;
-                        else if (board[1, 1] == 2)
-                            _5 = 2;
-                        break;
-                    case 6:
-                        if (board[1, 2] == 1)
-                            _6 = 1;
-                        else if (board[2, 2] == 2)
-                            _6 = 2;
-                        break;
-                    case 7:
-                        if (board[2, 0] == 1)
-                            _7 = 1;
-                        else if (board[2, 0] == 2)
-                            _7 = 2;
-                        break;
-                    case 8:
-                        if (board[2, 1] == 1)
-                            _8 = 1;
-                        else if (board[2, 1] == 2)
-                            _8 = 2;
-                        break;
-                    case 9:
-                        if (board[2, 2] == 1)
-                            _9 = 1;
-                        else if (board[2, 2] == 2)
-                            _9 = 2;
-                        break;
-                }
-            }
+            int _1 = board[0,0];
+            int _2 = board[0,1];
+            int _3 = board[0,2];
+            int _4 = board[1,0];
+            int _5 = board[1,1];
+            int _6 = board[1,2];
+            int _7 = board[2,0];
+            int _8 = board[2,1];
+            int _9 = board[2,2];
 
-            if (_1 == 1)
+            if (_1 == one)
             {
-                if (_2 == 1)
-                    if (_3 != 2)
+                if (_2 == one)
+                    if (_3 != two)
                     {
                         r = 0; 
                         c = 2; 
                         return true;
                     }
-                if (_3 == 1)
-                    if (_2 != 2)
+                if (_3 == one)
+                    if (_2 != two)
                     {
                         r = 0;
                         c = 1;
                         return true;
                     }
-                if (_4 == 1)
-                    if (_7 != 2)
+                if (_4 == one)
+                    if (_7 != two)
                     {
                         r = 2;
                         c = 0;
                         return true;
                     }
-                if (_5 == 1)
-                    if (_9 != 2)
+                if (_5 == one)
+                    if (_9 != two)
                     {
                         r = 2;
                         c = 2;
                         return true;
                     }
-                if (_7 == 1)
-                    if (_4 != 2)
+                if (_7 == one)
+                    if (_4 != two)
                     {
                         r = 1;
                         c = 0;
                         return true;
                     }
-                if (_9 == 1)
-                    if (_5 != 2)
+                if (_9 == one)
+                    if (_5 != two)
                     {
                         r = 1;
                         c = 1;
                         return true;
                     }
             }
-            if (_2 == 1)
+            if (_2 == one)
             {
-                if (_3 == 1)
-                    if (_1 != 2)
+                if (_3 == one)
+                    if (_1 != two)
                     {
                         r = 0;
                         c = 0;
                         return true;
                     }
-                if (_5 == 1)
-                    if (_8 != 2)
+                if (_5 == one)
+                    if (_8 != two)
                     {
                         r = 2;
                         c = 1;
                         return true;
                     }
-                if (_8 == 1)
-                    if (_5 != 2)
+                if (_8 == one)
+                    if (_5 != two)
                     {
                         r = 1;
                         c = 1;
                         return true;
                     }
             }
-            if (_3 == 1)
+            if (_3 == one)
             {
-                if (_5 == 1)
-                    if (_7 != 2)
+                if (_5 == one)
+                    if (_7 != two)
                     {
                         r = 2;
                         c = 0;
                         return true;
                     }
-                if (_6 == 1)
-                    if (_9 != 2)
+                if (_6 == one)
+                    if (_9 != two)
                     {
                         r = 2;
                         c = 2;
                         return true;
                     }
-                if (_7 == 1)
-                    if (_5 != 2)
+                if (_7 == one)
+                    if (_5 != two)
                     {
                         r = 1;
                         c = 1;
                         return true;
                     }
-                if (_9 == 1)
-                    if (_6 != 2)
+                if (_9 == one)
+                    if (_6 != two)
                     {
                         r = 1;
                         c = 2;
                         return true;
                     }
             }
-            if (_4 == 1)
+            if (_4 == one)
             {
-                if (_5 == 1)
-                    if (_6 != 2)
+                if (_5 == one)
+                    if (_6 != two)
                     {
                         r = 1;
                         c = 2;
                         return true;
                     }
-                if (_6 == 1)
-                    if (_5 != 2)
+                if (_6 == one)
+                    if (_5 != two)
                     {
                         r = 1;
                         c = 1;
                         return true;
                     }
-                if (_7 == 1)
-                    if (_1 != 2)
-                    {
-                        r = 0;
-                        c = 0;
-                        return true;
-                    }
-            }
-            if (_5 == 1)
-            {
-                if (_6 == 1)
-                    if (_4 != 2)
-                    {
-                        r = 1;
-                        c = 0;
-                        return true;
-                    }
-                if (_7 == 1)
-                    if (_3 != 2)
-                    {
-                        r = 0;
-                        c = 2;
-                        return true;
-                    }
-                if (_8 == 1)
-                    if (_2 != 2)
-                    {
-                        r = 0;
-                        c = 1;
-                        return true;
-                    }
-                if (_9 == 1)
-                    if (_1 != 2)
+                if (_7 == one)
+                    if (_1 != two)
                     {
                         r = 0;
                         c = 0;
                         return true;
                     }
             }
-            if (_6 == 1)
+            if (_5 == one)
             {
-                if (_9 == 1)
-                    if (_3 != 2)
+                if (_6 == one)
+                    if (_4 != two)
+                    {
+                        r = 1;
+                        c = 0;
+                        return true;
+                    }
+                if (_7 == one)
+                    if (_3 != two)
+                    {
+                        r = 0;
+                        c = 2;
+                        return true;
+                    }
+                if (_8 == one)
+                    if (_2 != two)
+                    {
+                        r = 0;
+                        c = 1;
+                        return true;
+                    }
+                if (_9 == one)
+                    if (_1 != two)
+                    {
+                        r = 0;
+                        c = 0;
+                        return true;
+                    }
+            }
+            if (_6 == one)
+            {
+                if (_9 == one)
+                    if (_3 != two)
                     {
                         r = 0;
                         c = 2;
                         return true;
                     }
             }
-            if (_7 == 1)
+            if (_7 == one)
             {
-                if (_8 == 1)
-                    if (_9 != 2)
+                if (_8 == one)
+                    if (_9 != two)
                     {
                         r = 2;
                         c = 2;
                         return true;
                     }
-                if (_9 == 1)
-                    if (_8 != 2)
+                if (_9 == one)
+                    if (_8 != two)
                     {
                         r = 2;
                         c = 1;
                         return true;
                     }
             }
-            if (_8 == 1)
+            if (_8 == one)
             {
-                if (_9 == 1)
-                    if (_7 != 2)
+                if (_9 == one)
+                    if (_7 != two)
                     {
                         r = 2;
                         c = 0;

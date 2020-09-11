@@ -102,15 +102,15 @@ namespace TicTacToeConsole
                     consoleUI.ClearConsole();
 
                     // Check game state
-                    if (logic.Draw())
-                    {
-                        Console.WriteLine("It's a Draw!");
-                        gameDone = true;
-                    }
-                    else if (logic.Win(player1.GetPlayerNumber()))
+                    if (logic.Win(player1.GetPlayerNumber()))
                     {
                         Console.WriteLine("Congratulations " + player1.GetPlayerName() + ". You Win!");
                         player1.UpdatePlayerWins(player1.GetPlayerWins() + 1);
+                        gameDone = true;
+                    }
+                    else if (logic.Draw())
+                    {
+                        Console.WriteLine("It's a Draw!");
                         gameDone = true;
                     }
                     else if (logic.Win(vsComputer ? computer.GetPlayer().GetPlayerNumber() : player2.GetPlayerNumber()))
