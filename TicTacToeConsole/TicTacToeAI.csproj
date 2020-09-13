@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TicTacToeLogic\TicTacToeLogic.csproj" />
+    <PackageReference Include="MatchboxCore" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

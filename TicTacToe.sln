@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeWPF", "TicTacToeWPF\TicTacToeWPF.csproj", "{209FB761-25C4-44F9-8ED0-EA05E24B8577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeConsole", "TicTacToeConsole\TicTacToeConsole.csproj", "{A84BB518-281B-4724-92C4-4E5B631CB52F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeAI", "TicTacToeConsole\TicTacToeAI.csproj", "{A84BB518-281B-4724-92C4-4E5B631CB52F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeLogic", "TicTacToeLogic\TicTacToeLogic.csproj", "{BB9AAEE3-8B76-42F3-8ACE-D90C5943E52F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeHardCodedLogic", "TicTacToeLogic\TicTacToeHardCodedLogic.csproj", "{BB9AAEE3-8B76-42F3-8ACE-D90C5943E52F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
